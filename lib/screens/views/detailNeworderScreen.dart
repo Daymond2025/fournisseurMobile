@@ -198,7 +198,7 @@ class _CommandHomeState extends State<CommandHome> {
                   padding: EdgeInsets.all(16.0),
                   child: Column(
                     children: [
-                      Text(
+                      const Text(
                         'Détail de la commande',
                         style: AppConstants.bodyTextStyle,
                       ),

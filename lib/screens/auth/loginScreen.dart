@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../constants/app_pages.dart';
 import '../../constants/constantApp.dart';
 import '../../controllers/GetUsercontroller.dart';
@@ -21,6 +23,7 @@ class _LoginSreenState extends State<LoginSreen> {
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _obscureText = true;
+  bool _acceptPolicy = false;
   final LoginController loginController = Get.put(LoginController());
 
   void _toggle() {
@@ -141,6 +144,56 @@ class _LoginSreenState extends State<LoginSreen> {
                           return null;
                         },
                       ),
+                      const SizedBox(height: 16.0),
+                      Row(
+                        children: [
+                          Checkbox(
+                            value: _acceptPolicy,
+                            onChanged: (value) {
+                              setState(() {
+                                _acceptPolicy = value!;
+                              });
+                            },
+                          ),
+                          Expanded(
+                            child: InkWell(
+                              onTap: () async {
+                                const url =
+                                    'https://supplier.daymondboutique.com/conditions-generales';
+
+                                if (await canLaunch(url)) {
+                                  await launch(url);
+
+                                  EasyLoading.dismiss();
+                                  // showGetSnackBar(messageText: "Un enregistrement ajouté avec succès!");
+                                  return;
+                                } else {
+                                  throw 'Could not launch $url';
+                                }
+                              },
+                              child: RichText(
+                                text: const TextSpan(
+                                  text: 'J\'accepte la ',
+                                  style: TextStyle(color: Colors.black),
+                                  children: [
+                                    TextSpan(
+                                      text: 'Politique générale',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 33, 58, 243),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                        text: "d'utilisation",
+                                        style: AppConstants.bodyTextStyle),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.5,
                       ),
@@ -151,11 +204,15 @@ class _LoginSreenState extends State<LoginSreen> {
                               onPressed: loginController.isLoading.value
                                   ? null // Désactiver le bouton pendant le chargement
                                   : () {
-                                      if (_formKey.currentState!.validate()) {
+                                      if (_formKey.currentState!.validate() &&
+                                          _acceptPolicy == true) {
                                         loginController.loginUser(
                                           _emailController.text,
                                           _passwordController.text,
                                         );
+                                      } else {
+                                        Get.snackbar("Erreur",
+                                            AppConstants.fieldRequiredError );
                                       }
                                     },
                               style: AppConstants.validateButtonStyle,

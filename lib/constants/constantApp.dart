@@ -7,10 +7,10 @@ class AppConstants {
   static const String appName = 'MyFlutterApp';
   static const String appVersion = '1.0.0';
   static const String companyName = 'My Company';
-    static const String currency = 'CFA';
+  static const String currency = 'CFA';
 
   // API URLs
-  static const String baseUrl = 'https://v2.daymondboutique.com/api/v2';
+  static const String baseUrl = 'https://v3.daymondboutique.com/api/v2';
   static const String loginUrl = '$baseUrl/auth/supplier/login';
   static const String userURL = '$baseUrl/user';
   //static const String registerUrl = '$baseUrl/auth/register';
@@ -73,7 +73,7 @@ class AppConstants {
   );
 
   // Error Messages
-  static const String fieldRequiredError = 'This field is required.';
+  static const String fieldRequiredError = 'Tous les champs sont obligatoire.';
   static const String invalidEmailError = 'Please enter a valid email address.';
 
   // Button Styles
