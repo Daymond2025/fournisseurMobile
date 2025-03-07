@@ -1,27 +1,39 @@
+import 'dart:convert';
+
 class Shops {
   int? id;
   String? code;
   String? name;
+  String? phoneNumber;
   City? city;
   Business? business;
   String? address;
-  
-  Shops({
-    this.id,
-    this.code,
-    this.name,
-    this.city,
-    this.business,
-    this.address,
-  });
+  List? shopPicture;
+
+  Shops(
+      {this.id,
+      this.code,
+      this.name,
+      this.city,
+      this.business,
+      this.phoneNumber,
+      this.address,
+      this.shopPicture});
 
   factory Shops.fromJson(Map<String, dynamic> json) {
     return Shops(
       id: json['id'],
+      phoneNumber: json['phone_number'] != null ? json['phone_number'] : null,
       code: json['code'],
+      shopPicture: json['shop_picture'] != null
+          ? (json['shop_picture'] is List
+              ? json['shop_picture'] as List
+              : jsonDecode(json['shop_picture']))
+          : null,
       name: json['name'],
       city: json['city'] != null ? City.fromJson(json['city']) : null,
-      business: json['business'] != null ? Business.fromJson(json['business']) : null,
+      business:
+          json['business'] != null ? Business.fromJson(json['business']) : null,
       address: json['address'],
     );
   }
@@ -38,7 +50,8 @@ class City {
     return City(
       id: json['id'],
       name: json['name'],
-      country: json['country'] != null ? Country.fromJson(json['country']) : null,
+      country:
+          json['country'] != null ? Country.fromJson(json['country']) : null,
     );
   }
 }

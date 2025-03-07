@@ -1,3 +1,4 @@
+import 'package:daymond_dis/screens/newScreens/connexion/connexion_widget.dart';
 import 'package:get/get.dart';
 
 import '../screens/auth/loginScreen.dart';
@@ -14,7 +15,7 @@ class AppPages {
   static final routes = [
     GetPage(
       name: Routes.login,
-      page: () => const LoginSreen(),
+      page: () => const ConnexionWidget(),
     ),
     GetPage(
       name: Routes.bigin,

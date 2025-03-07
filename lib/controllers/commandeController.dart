@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:daymond_dis/screens/auth/loginScreen.dart';
+import 'package:daymond_dis/screens/newScreens/connexion/connexion_widget.dart';
 import 'package:daymond_dis/screens/views/detailNeworderScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -66,7 +67,7 @@ class OrderController extends GetxController {
         lastPage.value = jsonData['meta']['last_page'];
         print('Data reçue: $jsonData');
       } else if (response.statusCode == 401) {
-        Get.offAll(LoginSreen());
+        Get.offAll(ConnexionWidget());
         Get.snackbar(
             "Erreur", "Accès non autorisé, veuillez vous reconnecter.");
       } else {

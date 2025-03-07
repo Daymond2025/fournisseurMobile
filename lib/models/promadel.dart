@@ -25,9 +25,9 @@ class Product {
   final String? link;
   final Price? price;
   final PriceDelivery? priceDelivery;
-  final List<String>? images;
-  final List<String>? sizes;
-  final List<String>? colors;
+  final List? images;
+  final List? sizes;
+  final List? colors;
   final String? createdAt;
   final String? updatedAt;
   final String? createdAtFr;
@@ -101,11 +101,9 @@ class Product {
       priceDelivery: json['price_delivery'] != null
           ? PriceDelivery.fromJson(json['price_delivery'])
           : null,
-      images:
-          (json['images'] != null) ? List<String>.from(json['images']) : null,
-      sizes: (json['sizes'] != null) ? List<String>.from(json['sizes']) : null,
-      colors:
-          (json['colors'] != null) ? List<String>.from(json['colors']) : null,
+      images: (json['images'] != null) ? json['images'] : null,
+      sizes: (json['sizes'] != null) ? json['sizes'] : null,
+      colors: (json['colors'] != null) ? json['colors'] : null,
       createdAt: json['created_at'],
       updatedAt: json['updated_at'],
       createdAtFr: json['created_at_fr'],
@@ -265,7 +263,7 @@ class Business {
   final String? email;
   final String? phoneNumber;
   final String? address;
-  final List<String>? registersPath;
+  final String? registersPath;
   final String? createdAt;
   final String? updatedAt;
   final String? createdAtFr;
@@ -293,9 +291,8 @@ class Business {
       email: json['email'],
       phoneNumber: json['phone_number'],
       address: json['address'],
-      registersPath: (json['registers_path'] != null)
-          ? List<String>.from(json['registers_path'])
-          : null,
+      registersPath:
+          (json['registers_path'] != null) ? json['registers_path'] : null,
       createdAt: json['created_at'],
       updatedAt: json['updated_at'],
       createdAtFr: json['created_at_fr'],

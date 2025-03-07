@@ -18,13 +18,28 @@ Future<ApiResponse> getUserDetail() async {
       'Authorization': 'Bearer $token'
     });
 
-    print(';getUserDetail;;;;;;;;;;;;;;;;;;;;;t ${response.body}');
+    print(
+        ';getUserDetail  ;;;;;;;;;;;;;;;;;;;;;t ${jsonDecode(response.body)['data']} ${response.statusCode} ');
+
     final data = response.body;
     switch (response.statusCode) {
       case 200:
-        apiResponse.data = User.fromJson(jsonDecode(response.body)['data']);
-        authController
-            .updateUserInfo(User.fromJson(jsonDecode(response.body)['data']));
+        print("==DEBUT SHARED==");
+        final userData = jsonDecode(response.body)['data'];
+        try {
+          User user = User.fromJson(userData);
+          apiResponse.data = user;
+          authController.updateUserInfo(user);
+          print("User créé avec succès : $user");
+        } catch (e) {
+          print("Erreur User.fromJson : $e");
+        }
+
+        // Sauvegarder dans SharedPreferences
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('user_info', jsonEncode(userData));
+
+        print("==FIN SHARED==");
         break;
       case 401:
         apiResponse.error = AppConstants.unauthorized;

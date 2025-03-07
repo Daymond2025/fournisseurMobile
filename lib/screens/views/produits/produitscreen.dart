@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:daymond_dis/screens/newScreens/creationproduit/creation_produit_widget.dart';
 import 'package:daymond_dis/screens/views/commande/paginationcommande.dart';
 import 'package:daymond_dis/screens/views/homeScreen.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,18 @@ class _ProduitScreenState extends State<ProduitScreen> {
   String selectedFilter = 'En stock';
   final ProductController productController = Get.put(ProductController());
   final ProducttController product2Controller = Get.put(ProducttController());
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    product2Controller.fetchProducts(product2Controller.currentPage.value);
+  }
+
+  @override
+  void didUpdateWidget(covariant ProduitScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    product2Controller.fetchProducts(product2Controller.currentPage.value);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +85,7 @@ class _ProduitScreenState extends State<ProduitScreen> {
                       children: [
                         InkWell(
                           onTap: () {
-                            Get.to(() => const AddProjetForm());
+                            Get.to(() => const CreationProduitWidget());
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),

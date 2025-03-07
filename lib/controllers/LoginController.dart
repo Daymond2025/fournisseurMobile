@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -51,7 +52,9 @@ class LoginController extends GetxController {
       );
 
       if (response.statusCode == 200) {
+        EasyLoading.dismiss();
         final data = jsonDecode(response.body);
+        print(data);
         user.value = User.fromJson(data['data']['user']);
         print(' $data');
         token = data['data']['token']; // Stocker le token en mémoire
@@ -63,6 +66,7 @@ class LoginController extends GetxController {
         _saveIsAdmin(admin, auths);
         // Rediriger vers la page d'accueil
       } else {
+        EasyLoading.dismiss();
         print(response.body);
         Get.snackbar('Erreur', 'Erreur de connexion, veuillez réessayer.');
       }

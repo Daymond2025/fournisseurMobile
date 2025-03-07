@@ -568,6 +568,7 @@ class _AddProjetFormState extends State<AddProjetForm> {
                             labelText: 'Ajouter une taille',
                             labelStyle: AppConstants.bodyTextStyle),
                       ),
+ 
  */
                       const SizedBox(height: 10),
 

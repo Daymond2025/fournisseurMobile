@@ -16,4 +16,6 @@ class Images {
   static const addpict = 'images/addpi.png';
   static const pictempty = 'images/add-images.png';
   static const picgrey = 'images/addgrey.png';
+  static const livreur = 'images/livreurLogo.png';
+  static const livreur2 = 'images/livreurPetit.png';
 }

@@ -1,9 +1,21 @@
+import 'dart:convert';
+
 import 'package:daymond_dis/constants/styles.dart';
+import 'package:daymond_dis/controllers/supplierController.dart';
+import 'package:daymond_dis/screens/newScreens/commentcava/commentcava_widget.dart';
+import 'package:daymond_dis/screens/newScreens/flutter_flow_icon_button.dart';
+import 'package:daymond_dis/screens/newScreens/flutter_flow_theme.dart';
+import 'package:daymond_dis/screens/newScreens/flutter_flow_util.dart';
+import 'package:daymond_dis/screens/newScreens/livreurs/livreurs_widget.dart';
+import 'package:daymond_dis/screens/newScreens/profil/profil_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/app_images.dart';
 import '../../constants/app_pages.dart';
@@ -42,6 +54,17 @@ class _HomeSreenState extends State<HomeSreen> {
   final LoginController loginController = Get.put(LoginController());
   final WalletController walletController = Get.put(WalletController());
   final OrderController orderController = Get.put(OrderController());
+  final Suppliercontroller supplierController = Get.put(Suppliercontroller());
+
+  RxBool modif = false.obs; // Déclaration d'un RxBool
+  final TextEditingController _nomPrenomController = TextEditingController();
+  final FocusNode _nomPrenomFocusNode = FocusNode();
+
+  final TextEditingController _contactController = TextEditingController();
+  final FocusNode _contactFocusNode = FocusNode();
+
+  final TextEditingController _emailController = TextEditingController();
+  final FocusNode _emailFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -49,6 +72,7 @@ class _HomeSreenState extends State<HomeSreen> {
     super.initState();
     walletController.fetchWalletData();
     //orderController.fetchCommande('confirm');
+    print("la wallet value ${walletController.wallet.value}");
     getUser('Home');
   }
 
@@ -63,9 +87,643 @@ class _HomeSreenState extends State<HomeSreen> {
           loading = false;
           //txtNameController.text = user!.name ?? '';
         });
+        print("User info : ${user?.entity.id}");
       }
     } else if (response.error == AppConstants.unauthorized) {
     } else {}
+  }
+
+  void toggle() {
+    modif.value = !modif.value; // Utiliser .value pour modifier la valeur
+  }
+
+  modifierInfos() async {
+    bool success = await supplierController.updateFournisseur(
+      id: user!.entity.id,
+      firstName: _nomPrenomController.text.split(" ").first,
+      lastName: _nomPrenomController.text.split(" ").sublist(1).join(" "),
+      email: _emailController.text,
+      phoneNumber: _contactController.text,
+    );
+
+    // Affichage d'un message en fonction de la réussite ou de l'échec de la soumission
+    if (success) {
+      Get.off(() => HomeSreen());
+      EasyLoading.showSuccess('Infos modifiées avec succès!');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Infos modifiées soumis avec succès!'),
+        ),
+      );
+    } else {
+      EasyLoading.showError('Erreur lors de la modification des infos');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Erreur lors de la modification des infos'),
+        ),
+      );
+    }
+  }
+
+  showBoutique() async {
+    // showModalBottomSheet(
+    //     context: context,
+    //     backgroundColor: Colors.white,
+    //     isScrollControlled: true, // Permet au modal d'occuper plus d'espace
+
+    //     builder: (BuildContext context) {});
+  }
+
+  showGerant() async {
+    setState(() {
+      _nomPrenomController.text =
+          '${user!.entity.firstName} ${user!.entity.lastName}';
+      _contactController.text = user!.phoneNumber ?? '';
+      _emailController.text = user!.email ?? '';
+    });
+    showModalBottomSheet(
+        context: context,
+        backgroundColor: Colors.white,
+        isScrollControlled: true, // Permet au modal d'occuper plus d'espace
+
+        builder: (BuildContext context) {
+          return
+              // Generated code for this userInfos Widget...
+              //   Align(
+              // alignment: AlignmentDirectional(0, 1),
+              // child: Padding(
+              //   padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+              //   child:
+
+              Container(
+            width: double.infinity,
+            height: MediaQuery.of(context).size.height * 0.8, // 90% de l'écran
+            decoration: const BoxDecoration(
+              color: Color(0xFFF7F7FA),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(0),
+                bottomRight: Radius.circular(0),
+                topLeft: Radius.circular(40),
+                topRight: Radius.circular(40),
+              ),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Color(0xFF0055FF),
+                        borderRadius: BorderRadius.circular(28),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                FlutterFlowIconButton(
+                                  borderRadius: 8,
+                                  buttonSize: 40,
+                                  fillColor: Color(0xFF0055FF),
+                                  icon: Icon(
+                                    Icons.arrow_back,
+                                    color: FlutterFlowTheme.of(context).info,
+                                    size: 24,
+                                  ),
+                                  onPressed: () {
+                                    print('IconButton pressed ...');
+                                  },
+                                ),
+                                Obx(() => !modif.value
+                                    ? InkWell(
+                                        onTap: () {
+                                          modifierInfos();
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            "Enregistrer",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      )
+                                    : Text('')),
+                              ],
+                            ),
+                            Container(
+                              width: 80,
+                              height: 80,
+                              clipBehavior: Clip.antiAlias,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                              ),
+                              child: Image.network(
+                                user!.picture ?? '',
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Text(
+                              '${user!.entity.firstName} ${user!.entity.lastName}',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Inter',
+                                    color: Colors.white,
+                                    fontSize: 24,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 0),
+                      child: Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(20),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Column(
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Nom et prénoms',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Inter',
+                                          letterSpacing: 0.0,
+                                        ),
+                                  ),
+                                  Obx(
+                                    () => !modif.value
+                                        ? Text(
+                                            '${user!.entity.firstName} ${user!.entity.lastName}',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Inter',
+                                                  fontSize: 16,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                          )
+                                        : Container(
+                                            width: 200,
+                                            child: TextFormField(
+                                              controller: _nomPrenomController,
+                                              focusNode: _nomPrenomFocusNode,
+                                              autofocus: false,
+                                              obscureText: false,
+                                              decoration: InputDecoration(
+                                                isDense: true,
+                                                labelStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelMedium
+                                                        .override(
+                                                          fontFamily: 'Inter',
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                hintText:
+                                                    'Quel est le nom de cet article ?',
+                                                hintStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelMedium
+                                                        .override(
+                                                          fontFamily: 'Inter',
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color(0xFFC4C4C4),
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color(0xFFFF9500),
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                errorBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .error,
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                focusedErrorBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .error,
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                filled: true,
+                                                fillColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                                contentPadding:
+                                                    EdgeInsets.all(10),
+                                              ),
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily: 'Inter',
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                              cursorColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              // validator: _model
+                                              //     .textController1Validator
+                                              //     .asValidator(context),
+                                            ),
+                                          ),
+                                  )
+                                ].divide(SizedBox(height: 10)),
+                              ),
+                              FlutterFlowIconButton(
+                                borderRadius: 100,
+                                buttonSize: 40,
+                                fillColor: Color(0xFFECECEC),
+                                icon: FaIcon(
+                                  FontAwesomeIcons.pen,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  size: 15,
+                                ),
+                                onPressed: () async {
+                                  toggle();
+
+                                  print('IconButton pressed ...');
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(20, 10, 20, 10),
+                      child: Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(20),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Column(
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Contact',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Inter',
+                                          letterSpacing: 0.0,
+                                        ),
+                                  ),
+                                  Obx(() => !modif.value
+                                      ? Text(
+                                          user?.phoneNumber ?? '',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Inter',
+                                                fontSize: 14,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                        )
+                                      : Container(
+                                          width: 200,
+                                          child: TextFormField(
+                                            controller: _contactController,
+                                            focusNode: _contactFocusNode,
+                                            autofocus: false,
+                                            obscureText: false,
+                                            decoration: InputDecoration(
+                                              isDense: true,
+                                              labelStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelMedium
+                                                      .override(
+                                                        fontFamily: 'Inter',
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                              hintText:
+                                                  'Quel est le nom de cet article ?',
+                                              hintStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelMedium
+                                                      .override(
+                                                        fontFamily: 'Inter',
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0xFFC4C4C4),
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0xFFFF9500),
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              errorBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .error,
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              focusedErrorBorder:
+                                                  OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .error,
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              filled: true,
+                                              fillColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryBackground,
+                                              contentPadding:
+                                                  EdgeInsets.all(10),
+                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Inter',
+                                                  letterSpacing: 0.0,
+                                                ),
+                                            cursorColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .primaryText,
+                                            // validator: _model
+                                            //     .textController1Validator
+                                            //     .asValidator(context),
+                                          ),
+                                        )),
+                                ].divide(SizedBox(height: 10)),
+                              ),
+                              FlutterFlowIconButton(
+                                borderRadius: 100,
+                                buttonSize: 40,
+                                fillColor: Color(0xFFECECEC),
+                                icon: FaIcon(
+                                  FontAwesomeIcons.pen,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  size: 15,
+                                ),
+                                onPressed: () {
+                                  toggle();
+                                  print('IconButton pressed ...');
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
+                      child: Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(20),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Column(
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Adresse e-mail',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Inter',
+                                          letterSpacing: 0.0,
+                                        ),
+                                  ),
+                                  Obx(() => !modif.value
+                                      ? Text(
+                                          user!.email ?? '',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Inter',
+                                                fontSize: 14,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                        )
+                                      : Container(
+                                          width: 200,
+                                          child: TextFormField(
+                                            controller: _emailController,
+                                            focusNode: _emailFocusNode,
+                                            autofocus: false,
+                                            obscureText: false,
+                                            decoration: InputDecoration(
+                                              isDense: true,
+                                              labelStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelMedium
+                                                      .override(
+                                                        fontFamily: 'Inter',
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                              hintText:
+                                                  'Quel est le nom de cet article ?',
+                                              hintStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelMedium
+                                                      .override(
+                                                        fontFamily: 'Inter',
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0xFFC4C4C4),
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0xFFFF9500),
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              errorBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .error,
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              focusedErrorBorder:
+                                                  OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .error,
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              filled: true,
+                                              fillColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryBackground,
+                                              contentPadding:
+                                                  EdgeInsets.all(10),
+                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Inter',
+                                                  letterSpacing: 0.0,
+                                                ),
+                                            cursorColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .primaryText,
+                                            // validator: _model
+                                            //     .textController1Validator
+                                            //     .asValidator(context),
+                                          ),
+                                        )),
+                                ].divide(SizedBox(height: 10)),
+                              ),
+                              FlutterFlowIconButton(
+                                borderRadius: 100,
+                                buttonSize: 40,
+                                fillColor: Color(0xFFECECEC),
+                                icon: FaIcon(
+                                  FontAwesomeIcons.pen,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  size: 15,
+                                ),
+                                onPressed: () {
+                                  toggle();
+                                  print('IconButton pressed ...');
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.all(20),
+                  child: InkWell(
+                    onTap: () async {
+                      loginController.logout();
+                    },
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Icon(
+                          Icons.logout,
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          size: 24,
+                        ),
+                        Text(
+                          'Déconnexion',
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Inter',
+                                    fontSize: 18,
+                                    letterSpacing: 0.0,
+                                  ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+          //   ),
+          // );
+        });
   }
 
   @override
@@ -143,140 +801,483 @@ class _HomeSreenState extends State<HomeSreen> {
                                             ),
                                           ],
                                         ),
-                                        GestureDetector(
-                                          onTap: () {
-                                            showDialog(
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return AlertDialog(
-                                                  backgroundColor: Colors.white,
-                                                  title: Center(
-                                                    child: Text(
-                                                      "",
-                                                      style: AppConstants
-                                                          .headingTextStyle
-                                                          .copyWith(
-                                                              fontSize: 15),
-                                                    ),
-                                                  ),
-                                                  content: Text(
-                                                    'Informations disponible sur la version web',
-                                                    style: AppConstants
-                                                        .bodyTextStyle
-                                                        .copyWith(fontSize: 15),
-                                                  ),
-                                                  actions: [
-                                                    ElevatedButton(
-                                                      style: AppConstants
-                                                          .validateButtonStyle,
-                                                      onPressed: () {
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                      },
-                                                      child: const Text(
-                                                        "Quitter",
-                                                        style: AppConstants
-                                                            .buttonTextStyle,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                );
-                                              },
-                                            );
+                                        // GestureDetector(
+                                        //   onTap: () {
+                                        //     showDialog(
+                                        //       context: context,
+                                        //       builder: (BuildContext context) {
+                                        //         return AlertDialog(
+                                        //           backgroundColor: Colors.white,
+                                        //           title: Center(
+                                        //             child: Text(
+                                        //               "",
+                                        //               style: AppConstants
+                                        //                   .headingTextStyle
+                                        //                   .copyWith(
+                                        //                       fontSize: 15),
+                                        //             ),
+                                        //           ),
+                                        //           content: Text(
+                                        //             'Informations disponible sur la version web',
+                                        //             style: AppConstants
+                                        //                 .bodyTextStyle
+                                        //                 .copyWith(fontSize: 15),
+                                        //           ),
+                                        //           actions: [
+                                        //             ElevatedButton(
+                                        //               style: AppConstants
+                                        //                   .validateButtonStyle,
+                                        //               onPressed: () {
+                                        //                 Navigator.of(context)
+                                        //                     .pop();
+                                        //               },
+                                        //               child: const Text(
+                                        //                 "Quitter",
+                                        //                 style: AppConstants
+                                        //                     .buttonTextStyle,
+                                        //               ),
+                                        //             ),
+                                        //           ],
+                                        //         );
+                                        //       },
+                                        //     );
+                                        //   },
+                                        //   child: Card(
+                                        //     color: Colors.white,
+                                        //     child: Column(
+                                        //       children: [
+                                        //         Padding(
+                                        //           padding:
+                                        //               const EdgeInsets.all(8.0),
+                                        //           child: Row(
+                                        //             children: [
+                                        //               CircleAvatar(
+                                        //                 radius: 25,
+                                        //                 backgroundColor:
+                                        //                     const Color
+                                        //                         .fromARGB(255,
+                                        //                         243, 237, 254),
+                                        //                 child: Image.network(
+                                        //                   '${walletController.wallet.value!.entity!.logo}',
+                                        //                   height: 200,
+                                        //                   width: 100,
+                                        //                   fit: BoxFit.cover,
+                                        //                 ),
+                                        //               ),
+                                        //               const SizedBox(
+                                        //                 width: 20,
+                                        //               ),
+                                        //               Column(
+                                        //                 mainAxisAlignment:
+                                        //                     MainAxisAlignment
+                                        //                         .start,
+                                        //                 crossAxisAlignment:
+                                        //                     CrossAxisAlignment
+                                        //                         .start,
+                                        //                 children: [
+                                        //                   Text(
+                                        //                     '${walletController.wallet.value!.entity!.name}',
+                                        //                     style: AppConstants
+                                        //                         .headingTextStyle
+                                        //                         .copyWith(
+                                        //                             fontSize:
+                                        //                                 14),
+                                        //                   ),
+                                        //                   Text(
+                                        //                     '${walletController.wallet.value!.entity!.phoneNumber}',
+                                        //                     style: AppConstants
+                                        //                         .bodyTextStyle
+                                        //                         .copyWith(
+                                        //                             fontSize:
+                                        //                                 11),
+                                        //                   ),
+                                        //                 ],
+                                        //               )
+                                        //             ],
+                                        //           ),
+                                        //         )
+                                        //       ],
+                                        //     ),
+                                        //   ),
+                                        // ),
+                                        InkWell(
+                                          onTap: () async {
+                                            Get.to(() => ProfilWidget(
+                                                  user: user!,
+                                                  businessInfo: walletController
+                                                      .wallet.value!,
+                                                ));
                                           },
-                                          child: Card(
-                                            color: Colors.white,
-                                            child: Column(
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Row(
+                                          child: Container(
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  blurRadius: 4,
+                                                  color: Color(0x33000000),
+                                                  offset: Offset(
+                                                    0,
+                                                    2,
+                                                  ),
+                                                )
+                                              ],
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                            ),
+                                            child: Padding(
+                                              padding: EdgeInsets.all(10),
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
                                                     children: [
-                                                      CircleAvatar(
-                                                        radius: 25,
-                                                        backgroundColor:
-                                                            const Color
-                                                                .fromARGB(255,
-                                                                243, 237, 254),
+                                                      Text(
+                                                        'Info fournisseur',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Inter',
+                                                                  color: Color(
+                                                                      0xFF707070),
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                      ),
+                                                      Icon(
+                                                        Icons
+                                                            .arrow_forward_ios_rounded,
+                                                        color:
+                                                            Color(0xFF707070),
+                                                        size: 30,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Container(
+                                                        width: 65,
+                                                        height: 65,
+                                                        clipBehavior:
+                                                            Clip.antiAlias,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          shape:
+                                                              BoxShape.circle,
+                                                        ),
                                                         child: Image.network(
                                                           '${walletController.wallet.value!.entity!.logo}',
-                                                          height: 200,
-                                                          width: 100,
                                                           fit: BoxFit.cover,
                                                         ),
                                                       ),
-                                                      const SizedBox(
-                                                        width: 20,
-                                                      ),
                                                       Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
                                                         crossAxisAlignment:
                                                             CrossAxisAlignment
                                                                 .start,
                                                         children: [
                                                           Text(
                                                             '${walletController.wallet.value!.entity!.name}',
-                                                            style: AppConstants
-                                                                .headingTextStyle
-                                                                .copyWith(
-                                                                    fontSize:
-                                                                        14),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Inter',
+                                                                  color: Color(
+                                                                      0xFF0084FE),
+                                                                  fontSize: 20,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
                                                           ),
                                                           Text(
-                                                            '${walletController.wallet.value!.entity!.phoneNumber}',
-                                                            style: AppConstants
-                                                                .bodyTextStyle
-                                                                .copyWith(
-                                                                    fontSize:
-                                                                        11),
+                                                            '#${user?.entity.shop.code}',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Inter',
+                                                                  color: Color(
+                                                                      0xFF707070),
+                                                                  fontSize: 14,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
                                                           ),
                                                         ],
-                                                      )
-                                                    ],
+                                                      ),
+                                                    ].divide(
+                                                        SizedBox(width: 10)),
                                                   ),
-                                                )
-                                              ],
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ),
                                         const SizedBox(
                                           height: 20,
                                         ),
-                                        Align(
-                                          alignment: Alignment.bottomLeft,
-                                          child: SizedBox(
-                                            height: 40,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.4,
-                                            child: ElevatedButton(
-                                                style: AppConstants
-                                                    .cancelButtonStyle,
-                                                onPressed: () {
-                                                  loginController.logout();
-                                                },
-                                                child: Text(
-                                                  'Se deconnecter',
-                                                  style: AppConstants
-                                                      .buttonTextStyle
-                                                      .copyWith(fontSize: 10),
-                                                )),
+                                        // Generated code for this Container Widget...
+                                        InkWell(
+                                          onTap: () async {
+                                            showGerant();
+                                          },
+                                          child: Container(
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  blurRadius: 4,
+                                                  color: Color(0x33000000),
+                                                  offset: Offset(
+                                                    0,
+                                                    2,
+                                                  ),
+                                                )
+                                              ],
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                            ),
+                                            child: Padding(
+                                              padding: EdgeInsets.all(10),
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        'Info gérant',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Inter',
+                                                                  color: Color(
+                                                                      0xFF707070),
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                      ),
+                                                      Icon(
+                                                        Icons
+                                                            .arrow_forward_ios_rounded,
+                                                        color:
+                                                            Color(0xFF707070),
+                                                        size: 30,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Container(
+                                                        width: 65,
+                                                        height: 65,
+                                                        clipBehavior:
+                                                            Clip.antiAlias,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          shape:
+                                                              BoxShape.circle,
+                                                        ),
+                                                        child: Image.network(
+                                                          user?.picture ?? '',
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                      Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            '${user?.entity.firstName} ${user?.entity.lastName}',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Inter',
+                                                                  color: Color(
+                                                                      0xFF0084FE),
+                                                                  fontSize: 20,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                          ),
+                                                          Text(
+                                                            user?.phoneNumber ??
+                                                                '',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Inter',
+                                                                  color: Color(
+                                                                      0xFF707070),
+                                                                  fontSize: 14,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ].divide(
+                                                        SizedBox(width: 10)),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
                                           ),
-                                        )
+                                        ),
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                        InkWell(
+                                          onTap: () async {
+                                            Get.to(() => CommentcavaWidget());
+                                          },
+                                          child: Container(
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  blurRadius: 4,
+                                                  color: Color(0x33000000),
+                                                  offset: Offset(
+                                                    0,
+                                                    2,
+                                                  ),
+                                                )
+                                              ],
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                            ),
+                                            child: Padding(
+                                              padding: EdgeInsets.all(10),
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        'Comment ça va ?',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Inter',
+                                                                  color: Color(
+                                                                      0xFF707070),
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                      ),
+                                                      Icon(
+                                                        Icons
+                                                            .arrow_forward_ios_rounded,
+                                                        color:
+                                                            Color(0xFF707070),
+                                                        size: 30,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        // Align(
+                                        //   alignment: Alignment.bottomLeft,
+                                        //   child: SizedBox(
+                                        //     height: 40,
+                                        //     width: MediaQuery.of(context)
+                                        //             .size
+                                        //             .width *
+                                        //         0.4,
+                                        //     child: ElevatedButton(
+                                        //         style: AppConstants
+                                        //             .cancelButtonStyle,
+                                        //         onPressed: () {
+                                        //           loginController.logout();
+                                        //         },
+                                        //         child: Text(
+                                        //           'Se deconnecter',
+                                        //           style: AppConstants
+                                        //               .buttonTextStyle
+                                        //               .copyWith(fontSize: 10),
+                                        //         )),
+                                        //   ),
+                                        // )
                                       ],
                                     ),
                                   );
                                 },
                               );
                             },
-                            child: Text(
-                              walletController.wallet.value?.entity?.name ?? '',
-                              style: AppConstants.headingTextStyle
-                                  .copyWith(fontWeight: FontWeight.w500),
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 20,
+                                  height: 20,
+                                  clipBehavior: Clip.antiAlias,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Image.network(
+                                    walletController
+                                            .wallet.value?.entity?.logo ??
+                                        '',
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                SizedBox(width: 5),
+                                Text(
+                                  walletController.wallet.value?.entity?.name ??
+                                      '',
+                                  style: AppConstants.headingTextStyle
+                                      .copyWith(fontWeight: FontWeight.w500),
+                                ),
+                              ],
                             ),
                           ),
                           Text('')
@@ -499,115 +1500,186 @@ class _HomeSreenState extends State<HomeSreen> {
                           );
                         }),
                       ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Get.to(() => OrderView());
-                          },
-                          child: Container(
-                              height: 50,
-                              width: MediaQuery.of(context).size.width * 0.43,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(color: Colors.orange),
-                                  color:
-                                      const Color.fromARGB(255, 254, 250, 254)),
-                              child: Padding(
-                                padding: EdgeInsets.all(5.0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      Images.commande,
-                                      height: 30,
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Obx(() {
-                                      // Calcul du nombre de commandes publiées aujourd'hui
-                                      var confirmOrders = orderController
-                                          .orderList
-                                          .where((order) =>
-                                              order.status == 'confirm')
-                                          .length;
-                                      var pendingOrders = orderController
-                                          .orderList
-                                          .where((order) =>
-                                              order.status == 'pending')
-                                          .length;
-                                      var inProgressOrders = orderController
-                                          .orderList
-                                          .where((order) =>
-                                              order.status == 'in_progress')
-                                          .length;
-
-                                      var totalOrders = confirmOrders +
-                                          pendingOrders +
-                                          inProgressOrders;
-
-                                      return Row(
-                                        children: [
-                                          const Text(
-                                            'Commandes',
-                                            style: AppConstants.bodyTextStyle,
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Get.to(() => const LivreursWidget());
+                            },
+                            child: Container(
+                                // height: 50,
+                                width: 100,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                        color: const Color(0xFF0BC724)),
+                                    color: hexToColor('#F7F8FE')),
+                                child: Padding(
+                                  padding: EdgeInsets.all(10.0),
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(100),
+                                          color: Color(0xFF0BC724),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Image.asset(
+                                            Images.livreur,
+                                            height: 28,
+                                            width: 30,
                                           ),
-                                          const SizedBox(width: 5),
-                                          CircleAvatar(
-                                            radius: 8,
-                                            backgroundColor: Colors.red,
-                                            child: Text(
-                                              '$totalOrders', // Nombre de commandes publiées aujourd'hui
-                                              style: AppConstants.bodyTextStyle
-                                                  .copyWith(
-                                                      color: Colors.white,
-                                                      fontSize: 9),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
+                                      const Text(
+                                        'Livreurs',
+                                        style: AppConstants.bodyTextStyle,
+                                      )
+                                    ],
+                                  ),
+                                )),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Get.to(() => OrderView());
+                            },
+                            child: Container(
+                                // height: 50,
+                                width: 120,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(color: Colors.orange),
+                                    color: const Color.fromARGB(
+                                        255, 254, 250, 254)),
+                                child: Padding(
+                                  padding: EdgeInsets.all(10.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(100),
+                                            border: Border.all(
+                                                color: Colors.orange),
+                                            color: Colors.orange),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Image.asset(
+                                            Images.commande,
+                                            height: 30,
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Obx(() {
+                                        // Calcul du nombre de commandes publiées aujourd'hui
+                                        var confirmOrders = orderController
+                                            .orderList
+                                            .where((order) =>
+                                                order.status == 'confirm')
+                                            .length;
+                                        var pendingOrders = orderController
+                                            .orderList
+                                            .where((order) =>
+                                                order.status == 'pending')
+                                            .length;
+                                        var inProgressOrders = orderController
+                                            .orderList
+                                            .where((order) =>
+                                                order.status == 'in_progress')
+                                            .length;
+
+                                        var totalOrders = confirmOrders +
+                                            pendingOrders +
+                                            inProgressOrders;
+
+                                        return Row(
+                                          children: [
+                                            const Text(
+                                              'Commandes',
+                                              style: AppConstants.bodyTextStyle,
                                             ),
+                                            const SizedBox(width: 5),
+                                            CircleAvatar(
+                                              radius: 8,
+                                              backgroundColor: Colors.red,
+                                              child: Text(
+                                                '$totalOrders', // Nombre de commandes publiées aujourd'hui
+                                                style: AppConstants
+                                                    .bodyTextStyle
+                                                    .copyWith(
+                                                        color: Colors.white,
+                                                        fontSize: 9),
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      }),
+                                    ],
+                                  ),
+                                )),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Get.to(const ProduitScreen());
+                            },
+                            child: Container(
+                                // height: 50,
+                                width: 100,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(color: Colors.blue),
+                                    color: hexToColor('#F7F8FE')),
+                                child: Padding(
+                                  padding: EdgeInsets.all(10.0),
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(100),
+                                            border:
+                                                Border.all(color: Colors.blue),
+                                            color: Colors.blue),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Image.asset(
+                                            Images.produits,
+                                            height: 28,
+                                            width: 30,
                                           ),
-                                        ],
-                                      );
-                                    }),
-                                  ],
-                                ),
-                              )),
-                        ),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Get.to(const ProduitScreen());
-                          },
-                          child: Container(
-                              height: 50,
-                              width: MediaQuery.of(context).size.width * 0.43,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(color: Colors.blue),
-                                  color: hexToColor('#F7F8FE')),
-                              child: Padding(
-                                padding: EdgeInsets.all(10.0),
-                                child: Row(
-                                  children: [
-                                    Image.asset(
-                                      Images.produits,
-                                      height: 28,
-                                      width: 30,
-                                    ),
-                                    const SizedBox(
-                                      width: 20,
-                                    ),
-                                    const Text(
-                                      'Produits',
-                                      style: AppConstants.bodyTextStyle,
-                                    )
-                                  ],
-                                ),
-                              )),
-                        ),
-                      ],
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
+                                      const Text(
+                                        'Produits',
+                                        style: AppConstants.bodyTextStyle,
+                                      )
+                                    ],
+                                  ),
+                                )),
+                          ),
+                        ],
+                      ),
                     ),
                     SizedBox(
                       height: 20,

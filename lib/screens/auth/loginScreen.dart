@@ -1,3 +1,4 @@
+import 'package:daymond_dis/screens/newScreens/inscription/inscription_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -83,6 +84,17 @@ class _LoginSreenState extends State<LoginSreen> {
                           .copyWith(fontSize: 22, fontWeight: FontWeight.w900),
                     ),
                   ],
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => InscriptionWidget(),
+                      ),
+                    );
+                  },
+                  child: Text("Inscription"),
                 ),
                 const SizedBox(
                   height: 50,
@@ -212,7 +224,7 @@ class _LoginSreenState extends State<LoginSreen> {
                                         );
                                       } else {
                                         Get.snackbar("Erreur",
-                                            AppConstants.fieldRequiredError );
+                                            AppConstants.fieldRequiredError);
                                       }
                                     },
                               style: AppConstants.validateButtonStyle,

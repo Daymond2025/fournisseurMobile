@@ -46,7 +46,7 @@ class Entity {
   final String? email;
   final String? phoneNumber;
   final String? address;
-  final List<String>? registersPath;
+  final String? registersPath;
   final String? createdAt;
   final String? updatedAt;
   final String? createdAtFr;
@@ -74,7 +74,7 @@ class Entity {
       email: json['email'],
       phoneNumber: json['phone_number'],
       address: json['address'],
-      registersPath: List<String>.from(json['registers_path']),
+      registersPath: json['registers_path'],
       createdAt: json['created_at'],
       updatedAt: json['updated_at'],
       createdAtFr: json['created_at_fr'],
@@ -148,4 +148,3 @@ class FinancialData {
     };
   }
 }
-

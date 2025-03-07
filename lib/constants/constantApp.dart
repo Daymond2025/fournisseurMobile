@@ -10,7 +10,7 @@ class AppConstants {
   static const String currency = 'CFA';
 
   // API URLs
-  static const String baseUrl = 'https://v3.daymondboutique.com/api/v2';
+  static const String baseUrl = 'https://v2.daymondboutique.com/api/v2';
   static const String loginUrl = '$baseUrl/auth/supplier/login';
   static const String userURL = '$baseUrl/user';
   //static const String registerUrl = '$baseUrl/auth/register';
@@ -18,6 +18,9 @@ class AppConstants {
   static const String updateproduit = '$baseUrl/supplier/product';
   static const String updatestockproduit = '$baseUrl/supplier/product';
   static const String parametre = '$baseUrl/params/data?option=state';
+  static const String categories =
+      '$baseUrl/params/data?option=category_detail';
+  static const String villes = '$baseUrl/params/data/offline?option=city';
   static const String walletbyuser = '$baseUrl/supplier/wallet';
   static const String dashboard = '$baseUrl/supplier/dashboard?option=apk';
   static const String order = '$baseUrl/supplier/order';
@@ -28,6 +31,9 @@ class AppConstants {
   static const String retrait = '$baseUrl/supplier/payment/withdrawal';
   static const String transaction = '$baseUrl/supplier/transactions';
   static const String numbers = '$baseUrl/supplier/phone_number';
+
+  static const String updateUser = '$baseUrl/supplier/fournisseur';
+  static const String updateShop = '$baseUrl/supplier/updateShop';
 
   // API Keys
   //static const String apiKey = 'YOUR_API_KEY_HERE';

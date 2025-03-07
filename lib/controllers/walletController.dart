@@ -13,7 +13,7 @@ class WalletController extends GetxController {
   var isLoading = false.obs;
   var waiting = false.obs;
   RxInt isAdmin = 0.obs;
-    RxString roles = ''.obs;
+  RxString roles = ''.obs;
   @override
   void onInit() {
     // TODO: implement onInit
@@ -52,8 +52,12 @@ class WalletController extends GetxController {
 
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
-        print('$jsonData');
-        wallet.value = Wallet.fromJson(jsonData);
+        print('wallet value $jsonData');
+        try {
+          wallet.value = Wallet.fromJson(jsonData);
+        } catch (e) {
+          print("Erreur wallet : $e");
+        }
       } else if (response.statusCode == 401) {
         Get.snackbar("Error", "Unauthorized access, please log in again.");
       } else {

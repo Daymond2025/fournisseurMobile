@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:daymond_dis/screens/auth/loginScreen.dart';
+import 'package:daymond_dis/screens/newScreens/connexion/connexion_widget.dart';
 import 'package:daymond_dis/screens/views/produits/produitscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -158,6 +159,10 @@ class ProducttController extends GetxController {
       request.fields['quantity'] = projet.quantite.toString();
       request.fields['price_supplier'] = projet.prixOfficiel.toString();
       request.fields['price_partner'] = projet.prixPartenaire.toString();
+      request.fields['price_city_delivery'] =
+          projet.price_city_delivery.toString();
+      request.fields['price_no_city_delivery'] =
+          projet.price_no_city_delivery.toString();
       request.fields['codeProduit'] = projet.codeProduit;
 
       // Ajouter les tailles
@@ -167,8 +172,9 @@ class ProducttController extends GetxController {
 
       // Ajouter les couleurs
       for (int i = 0; i < projet.couleurs.length; i++) {
-        request.fields['colors[$i]'] = projet.couleurs[i]['name'];
-        request.fields['colors[$i]'] = projet.couleurs[i]['name'];
+        projet.couleurs[i].remove('color'); // Supprime la clé 'color'
+        request.fields['colors[$i]'] = jsonEncode(projet.couleurs[i]);
+        // request.fields['colors[$i]'] = projet.couleurs[i]['name'];
       }
 
       // Ajouter les fichiers d'image
@@ -193,7 +199,7 @@ class ProducttController extends GetxController {
       if (response.statusCode == 201) {
         print('object $responseData');
         fetchProducts(currentPage.value);
-        Get.to(ProduitScreen());
+        Get.to(() => ProduitScreen());
         return true; // Succès
       } else {
         // Affiche la réponse pour obtenir des détails supplémentaires
@@ -219,7 +225,7 @@ class ProducttController extends GetxController {
           'Content-Type': 'application/json',
         },
       );
-
+      print("fetch reponse : ${response.statusCode}");
       if (response.statusCode == 200) {
         var data = json.decode(response.body);
         List<Product> fetchedProducts = (data['data'] as List)
@@ -230,11 +236,11 @@ class ProducttController extends GetxController {
         currentPage.value = data['meta']['current_page'];
         lastPage.value = data['meta']['last_page'];
       } else {
-        Get.offAll(LoginSreen());
+        // Get.offAll(ConnexionWidget());
         Get.snackbar("Error", "Failed to load products");
       }
     } catch (e) {
-      Get.offAll(LoginSreen());
+      // Get.offAll(ConnexionWidget());
       Get.snackbar("Error", "An error occurred while fetching products");
     } finally {
       isLoading(false);
