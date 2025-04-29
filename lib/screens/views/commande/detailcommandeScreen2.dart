@@ -509,6 +509,30 @@ class _DetailCommande2State extends State<DetailCommande2> {
                           ),
                           const SizedBox(height: 20),
 
+                          // Condition pour "Commande en attente"
+                          if (widget.titre.trim().toLowerCase() ==
+                              'commande en attente'.toLowerCase())
+                            SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  // Logique pour "En attente"
+                                  Navigator.pop(context);
+                                  _showValidationSheet(context, "pending");
+                                },
+                                style:
+                                    AppConstants.validateButtonStyle.copyWith(
+                                  backgroundColor:
+                                      const MaterialStatePropertyAll(
+                                          Color.fromARGB(255, 175, 12, 129)),
+                                ),
+                                child: const Text('commande En attente',
+                                    style: TextStyle(color: Colors.white)),
+                              ),
+                            ),
+
+                          const SizedBox(height: 10),
+
                           // Condition pour "Commande en cours"
                           if (widget.titre.trim().toLowerCase() !=
                               'commande en cours'.toLowerCase())
@@ -551,30 +575,6 @@ class _DetailCommande2State extends State<DetailCommande2> {
                                           Colors.green),
                                 ),
                                 child: const Text('commande Livrées',
-                                    style: TextStyle(color: Colors.white)),
-                              ),
-                            ),
-
-                          const SizedBox(height: 10),
-
-                          // Condition pour "Commande en attente"
-                          if (widget.titre.trim().toLowerCase() !=
-                              'commande en attente'.toLowerCase())
-                            SizedBox(
-                              width: double.infinity,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  // Logique pour "En attente"
-                                  Navigator.pop(context);
-                                  _showValidationSheet(context, "pending");
-                                },
-                                style:
-                                    AppConstants.validateButtonStyle.copyWith(
-                                  backgroundColor:
-                                      const MaterialStatePropertyAll(
-                                          Color.fromARGB(255, 175, 12, 129)),
-                                ),
-                                child: const Text('commande En attente',
                                     style: TextStyle(color: Colors.white)),
                               ),
                             ),
@@ -651,7 +651,7 @@ class _DetailCommande2State extends State<DetailCommande2> {
                   child: Column(
                     children: [
                       Text(
-                        'Detail de la commande',
+                        'Détail de la commande',
                         style: AppConstants.bodyTextStyle,
                       ),
                       Divider(
@@ -682,7 +682,7 @@ class _DetailCommande2State extends State<DetailCommande2> {
                                                           10)),
                                               child: Text(
                                                 widget.item.product
-                                                    .colors![index],
+                                                    .colors![index]["name"],
                                                 style:
                                                     AppConstants.bodyTextStyle,
                                               )));

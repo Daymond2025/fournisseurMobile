@@ -76,7 +76,7 @@ GestureDetector produitCard(
                                 : (statut == 'Commande En cours')
                                     ? Colors.blue
                                     : Colors.orange,
-                    fontSize: 11,
+                    fontSize: 9,
                   ),
                 ),
               ],
@@ -87,6 +87,7 @@ GestureDetector produitCard(
           children: [
             Text(
               " $heurs",
+              style: TextStyle(fontSize: 9),
             ),
             SizedBox(
               height: 10,
@@ -94,7 +95,7 @@ GestureDetector produitCard(
             Text(
               '$montnt ${AppConstants.currency}',
               style: AppConstants.headingTextStyle
-                  .copyWith(fontSize: 17, color: Colors.blue),
+                  .copyWith(fontSize: 15, color: Colors.blue),
             ),
             SizedBox(
               height: 2,
@@ -133,7 +134,7 @@ Padding comptableCard(
     String maping,
     String imagep,
     String heurs,
-    String montnt,
+    int montnt,
     String montntVers,
     String statut,
     String action,
@@ -200,7 +201,7 @@ Padding comptableCard(
                       style: TextStyle(fontSize: 11, color: Colors.grey),
                     ),
                     TextSpan(
-                      text: montnt,
+                      text: "$montnt",
                       style:
                           const TextStyle(fontSize: 11, color: Colors.orange),
                     ),

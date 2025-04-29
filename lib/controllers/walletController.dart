@@ -73,6 +73,7 @@ class WalletController extends GetxController {
   }
 
   Future<void> fetchdash() async {
+    print("==api fetch dash==");
     try {
       waiting(true);
 
@@ -93,11 +94,18 @@ class WalletController extends GetxController {
           'Content-Type': 'application/json',
         },
       );
-
+      print("==api dashboard ${response.statusCode}");
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
-        print('$jsonData');
-        dash.value = FinancialData.fromJson(jsonData);
+        print('api dash == $jsonData');
+        try {
+          dash.value = FinancialData.fromJson(jsonData);
+        } catch (e, stacktrace) {
+          print(
+              "api dash Erreur lors de la conversion du JSON en FinancialData : $e");
+          print("api dash Stacktrace : $stacktrace");
+        }
+        print('api dash value ${dash.value}');
       } else if (response.statusCode == 401) {
         Get.snackbar("Error", "Unauthorized access, please log in again.");
       } else {

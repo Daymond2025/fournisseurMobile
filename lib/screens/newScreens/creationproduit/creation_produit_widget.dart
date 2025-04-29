@@ -243,6 +243,9 @@ class _CreationProduitWidgetState extends State<CreationProduitWidget> {
     _model.textController4 ??= TextEditingController();
     _model.textFieldFocusNode4 ??= FocusNode();
 
+    _model.textControllerT ??= TextEditingController();
+    _model.textFieldFocusNodeT ??= FocusNode();
+
     _model.textController5 ??= TextEditingController();
     _model.textFieldFocusNode5 ??= FocusNode();
 
@@ -1959,13 +1962,13 @@ class _CreationProduitWidgetState extends State<CreationProduitWidget> {
                                                                       TextFormField(
                                                                     controller:
                                                                         _model
-                                                                            .textController5,
+                                                                            .textControllerT,
                                                                     keyboardType:
                                                                         TextInputType
                                                                             .number,
                                                                     focusNode:
                                                                         _model
-                                                                            .textFieldFocusNode5,
+                                                                            .textFieldFocusNodeT,
                                                                     autofocus:
                                                                         false,
                                                                     obscureText:
@@ -2064,7 +2067,7 @@ class _CreationProduitWidgetState extends State<CreationProduitWidget> {
                                                                         FlutterFlowTheme.of(context)
                                                                             .primaryText,
                                                                     validator: _model
-                                                                        .textController5Validator
+                                                                        .textControllerTValidator
                                                                         .asValidator(
                                                                             context),
                                                                   ),
@@ -2189,114 +2192,170 @@ class _CreationProduitWidgetState extends State<CreationProduitWidget> {
                                                           .asValidator(context),
                                                     ),
                                                   ),
-                                                  Container(
-                                                    width: double.infinity,
-                                                    child: TextFormField(
-                                                      keyboardType:
-                                                          TextInputType.number,
-                                                      controller:
-                                                          _prixPartenaireController,
-                                                      focusNode: _model
-                                                          .textFieldFocusNode7,
-                                                      autofocus: false,
-                                                      obscureText: false,
-                                                      decoration:
-                                                          InputDecoration(
-                                                        isDense: true,
-                                                        labelStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .labelMedium
+                                                  Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Flexible(
+                                                        child: Container(
+                                                          // width: double.infinity,
+                                                          child: TextFormField(
+                                                            keyboardType:
+                                                                TextInputType
+                                                                    .number,
+                                                            controller:
+                                                                _prixPartenaireController,
+                                                            focusNode: _model
+                                                                .textFieldFocusNode7,
+                                                            autofocus: false,
+                                                            obscureText: false,
+                                                            decoration:
+                                                                InputDecoration(
+                                                              isDense: true,
+                                                              labelStyle:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .labelMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Inter',
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                      ),
+                                                              hintText:
+                                                                  'Commission Daymond',
+                                                              hintStyle:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .labelMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Inter',
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                      ),
+                                                              enabledBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: Color(
+                                                                      0xFFC4C4C4),
+                                                                  width: 1,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8),
+                                                              ),
+                                                              focusedBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: Color(
+                                                                      0xFFFF9500),
+                                                                  width: 1,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8),
+                                                              ),
+                                                              errorBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .error,
+                                                                  width: 1,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8),
+                                                              ),
+                                                              focusedErrorBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .error,
+                                                                  width: 1,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8),
+                                                              ),
+                                                              filled: true,
+                                                              fillColor: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .secondaryBackground,
+                                                              contentPadding:
+                                                                  EdgeInsets
+                                                                      .all(20),
+                                                            ),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
                                                                 .override(
                                                                   fontFamily:
                                                                       'Inter',
                                                                   letterSpacing:
                                                                       0.0,
                                                                 ),
-                                                        hintText:
-                                                            'Commission Daymond',
-                                                        hintStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .labelMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Inter',
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                ),
-                                                        enabledBorder:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: Color(
-                                                                0xFFC4C4C4),
-                                                            width: 1,
+                                                            cursorColor:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryText,
+                                                            validator: _model
+                                                                .textController7Validator
+                                                                .asValidator(
+                                                                    context),
                                                           ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(8),
                                                         ),
-                                                        focusedBorder:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: Color(
-                                                                0xFFFF9500),
-                                                            width: 1,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(8),
-                                                        ),
-                                                        errorBorder:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .error,
-                                                            width: 1,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(8),
-                                                        ),
-                                                        focusedErrorBorder:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .error,
-                                                            width: 1,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(8),
-                                                        ),
-                                                        filled: true,
-                                                        fillColor: FlutterFlowTheme
-                                                                .of(context)
-                                                            .secondaryBackground,
-                                                        contentPadding:
-                                                            EdgeInsets.all(20),
                                                       ),
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            fontFamily: 'Inter',
-                                                            letterSpacing: 0.0,
+                                                      Flexible(
+                                                        child: Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: Color(
+                                                                0xFFFFECEC),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        5),
+                                                            border: Border.all(
+                                                              color: Color(
+                                                                  0xFFFF0000),
+                                                            ),
                                                           ),
-                                                      cursorColor:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                      validator: _model
-                                                          .textController7Validator
-                                                          .asValidator(context),
-                                                    ),
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    14),
+                                                            child: Text(
+                                                              'le vendeur reçoit : ${_prixPartenaireController.text != '' ? (int.parse(_prixPartenaireController.text) * 60 / 100) : 0}  FCFA',
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                    fontSize:
+                                                                        9.0,
+                                                                    fontFamily:
+                                                                        'Inter',
+                                                                    color: Color(
+                                                                        0xFFFF5F84),
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ].divide(
+                                                        SizedBox(width: 10)),
                                                   ),
                                                   if (errorMessage == true)
                                                     Container(
@@ -2433,17 +2492,22 @@ class _CreationProduitWidgetState extends State<CreationProduitWidget> {
                                                   });
                                                   break;
                                                 case "quatrieme":
-                                                  EasyLoading.show(
-                                                      status: "Un instant...");
+                                                  print(
+                                                      "produit hors abidjan ${_model.textControllerT.text}");
+                                                  // EasyLoading.show(
+                                                  //     status: "Un instant...");
                                                   Projet Produit = Projet(
                                                     price_city_delivery:
                                                         double.parse(_model
-                                                            .textController5
+                                                            .textController4
                                                             .text),
                                                     price_no_city_delivery:
                                                         double.parse(_model
-                                                            .textController5
-                                                            .text),
+                                                            .textControllerT
+                                                            .text
+                                                            .trim()
+                                                            .replaceAll(
+                                                                ',', '.')),
                                                     marque: _nomController.text,
                                                     description:
                                                         _descriptionController

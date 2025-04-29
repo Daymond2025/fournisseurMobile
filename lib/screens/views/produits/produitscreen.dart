@@ -161,7 +161,10 @@ class _ProduitScreenState extends State<ProduitScreen> {
                       physics: const NeverScrollableScrollPhysics(),
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2, mainAxisSpacing: 10),
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 10,
+                        childAspectRatio: 0.97,
+                      ),
                       itemCount: filteredProducts.length,
                       itemBuilder: (context, index) {
                         // Vérifiez si l'index est valide
@@ -338,12 +341,21 @@ class _ProduitScreenState extends State<ProduitScreen> {
                           color: Colors.grey,
                         ),
                       ),
-                      SizedBox(
-                        width: 30,
+                      ClipRRect(
                         child: Image.network(
                           logoUrl,
+                          width: 20,
+                          height: 20,
+                          fit: BoxFit.cover,
                         ),
-                      ),
+                      )
+                      // SizedBox(
+                      //   child: Image.network(
+                      //     logoUrl,
+                      //     width: 25,
+                      //     height: 25,
+                      //   ),
+                      // ),
                     ],
                   ),
                 ],

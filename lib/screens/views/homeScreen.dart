@@ -71,7 +71,7 @@ class _HomeSreenState extends State<HomeSreen> {
     // TODO: implement initState
     super.initState();
     walletController.fetchWalletData();
-    //orderController.fetchCommande('confirm');
+    orderController.fetchCommande(1);
     print("la wallet value ${walletController.wallet.value}");
     getUser('Home');
   }
@@ -202,7 +202,7 @@ class _HomeSreenState extends State<HomeSreen> {
                                     print('IconButton pressed ...');
                                   },
                                 ),
-                                Obx(() => !modif.value
+                                Obx(() => modif.value
                                     ? InkWell(
                                         onTap: () {
                                           modifierInfos();
@@ -1198,7 +1198,7 @@ class _HomeSreenState extends State<HomeSreen> {
                                                             .spaceBetween,
                                                     children: [
                                                       Text(
-                                                        'Comment ça va ?',
+                                                        'Comment ça marche ?',
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -1365,7 +1365,7 @@ class _HomeSreenState extends State<HomeSreen> {
                                                                     color: hexToColor(
                                                                         '#0791FF'),
                                                                     fontSize:
-                                                                        25)),
+                                                                        20)),
                                                         TextSpan(
                                                           text: AppConstants
                                                               .currency,

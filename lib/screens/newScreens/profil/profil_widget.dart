@@ -894,7 +894,7 @@ class _ProfilWidgetState extends State<ProfilWidget> {
                                           ),
                                         ),
                                       )
-                                    : Text('')),
+                                    : SizedBox(width: 20)),
                               ],
                             ),
                           ],

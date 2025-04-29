@@ -122,15 +122,32 @@ class FinancialData {
 
   // Méthode pour convertir du JSON vers un objet FinancialData
   factory FinancialData.fromJson(Map<String, dynamic> json) {
+    print("api dash dans le data == $json");
     return FinancialData(
-      chiffreAffaire: json['chiffre_affaire'],
-      solde: json['solde'],
-      aSolder: json['a_solder'],
-      retraitJour: json['retrait_jour'],
-      rechargeJour: json['recharge_jour'],
-      commissionJour: json['commission_jour'],
-      nbNouvelleCommande: json['nb_nouvelle_commande'],
-      nbCommandeValidee: json['nb_commande_validee'],
+      chiffreAffaire: json['chiffre_affaire'] is String
+          ? int.tryParse(json['chiffre_affaire']) ?? 0
+          : json['chiffre_affaire'],
+      solde: json['solde'] is String
+          ? int.tryParse(json['solde']) ?? 0
+          : json['solde'],
+      aSolder: json['a_solder'] is String
+          ? int.tryParse(json['a_solder']) ?? 0
+          : json['a_solder'],
+      retraitJour: json['retrait_jour'] is String
+          ? int.tryParse(json['retrait_jour']) ?? 0
+          : json['retrait_jour'],
+      rechargeJour: json['recharge_jour'] is String
+          ? int.tryParse(json['recharge_jour']) ?? 0
+          : json['recharge_jour'],
+      commissionJour: json['commission_jour'] is String
+          ? int.tryParse(json['commission_jour']) ?? 0
+          : json['commission_jour'],
+      nbNouvelleCommande: json['nb_nouvelle_commande'] is String
+          ? int.tryParse(json['nb_nouvelle_commande']) ?? 0
+          : json['nb_nouvelle_commande'],
+      nbCommandeValidee: json['nb_commande_validee'] is String
+          ? int.tryParse(json['nb_commande_validee']) ?? 0
+          : json['nb_commande_validee'],
     );
   }
 

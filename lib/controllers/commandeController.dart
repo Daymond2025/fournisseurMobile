@@ -57,10 +57,11 @@ class OrderController extends GetxController {
       // Gérer la réponse de l'API
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
-
+        print("les orders ${jsonData['data']}");
         List<Order> fetchedProducts = (jsonData['data'] as List)
             .map((productData) => Order.fromJson(productData))
             .toList();
+        print("====ORDER SUCCESS===");
         orderList.clear();
         orderList.assignAll(fetchedProducts);
         currentPage.value = jsonData['meta']['current_page'];
@@ -76,6 +77,7 @@ class OrderController extends GetxController {
       }
     } catch (e) {
       print(e);
+      print("====ORDER ERROR===");
       Get.snackbar("Erreur", e.toString());
     } finally {
       iswaiting(false); // Terminer l'état de chargement
@@ -121,7 +123,9 @@ class OrderController extends GetxController {
         Get.to(OrderView());
       } else {
         // Gérer l'erreur
-        Get.snackbar('Erreur', 'Impossible de mettre à jour le statut',
+        print("erreur change ${response.body}");
+        Get.snackbar('Erreur',
+            'Impossible de mettre à jour le statut ${response.statusCode}',
             backgroundColor: Colors.red, colorText: Colors.white);
       }
     } catch (e) {

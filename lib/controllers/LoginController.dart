@@ -67,7 +67,7 @@ class LoginController extends GetxController {
         // Rediriger vers la page d'accueil
       } else {
         EasyLoading.dismiss();
-        print(response.body);
+        print('Lerreur ${response.body}');
         Get.snackbar('Erreur', 'Erreur de connexion, veuillez réessayer.');
       }
     } finally {

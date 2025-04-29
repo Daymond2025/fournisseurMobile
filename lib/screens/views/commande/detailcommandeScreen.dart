@@ -60,7 +60,7 @@ class _DetailCommandeState extends State<DetailCommande> {
                   child: Column(
                     children: [
                       const Text(
-                        'Detail de la commande',
+                        'Détail de la commande',
                         style: AppConstants.bodyTextStyle,
                       ),
                       Divider(),

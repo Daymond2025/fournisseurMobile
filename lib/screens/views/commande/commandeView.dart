@@ -94,6 +94,7 @@ class _OrderViewState extends State<OrderView> {
                     itemBuilder: (context, index) {
                       final order = filteredOrders[index];
                       final items = order.items;
+                      print("object = ${order.toJson() ?? ''}");
 
                       if (items == null || items.isEmpty) {
                         return const Center(
@@ -154,7 +155,10 @@ class _OrderViewState extends State<OrderView> {
           selectedFilter = apiStatus;
           // Mettre à jour le Future avec le nouveau filtre
         });
-        print('object$apiStatus');
+        print(
+            "LES ORDERS ${orderController.orderList.map((el) => el.reference)}");
+        print(
+            'LES ORDERS $apiStatus ${orderController.orderList.where((order) => order.status == '$selectedFilter').toList()}');
       },
       child: Text(
         statusText,

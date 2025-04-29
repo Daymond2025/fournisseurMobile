@@ -129,46 +129,48 @@ class RechargeController extends GetxController {
     }
   }
 
-  Future<void> submitsolder(int id) async {
-    if (formKey.currentState!.validate()) {
-      // Changez Createpayement en createPayment
-      EasyLoading.show(status: "Un instant...");
-      // Assuming you have a URL for your API endpoint
-      String apiUrl = AppConstants.baseUrl;
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? token = prefs.getString('token');
+  Future<void> submitsolder(int id, int amount) async {
+    // if (formKey.currentState!.validate()) {
+    // Changez Createpayement en createPayment
+    print("id et amount $id $amount");
+    EasyLoading.show(status: "Un instant...");
+    // Assuming you have a URL for your API endpoint
+    String apiUrl = AppConstants.baseUrl;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
 
-      if (token == null) {
-        Get.snackbar("Error", "Token not found");
-        return;
-      }
-      // Envoyer la requête POST
-      final response = await http.get(
-        Uri.parse('$apiUrl/supplier/transaction/$id/pay'),
-        headers: {
-          'Authorization': 'Bearer $token', // Ajout du token dans les en-têtes
-          // 'Content-Type': 'application/json', // Spécifiez le type de contenu
-        },
-      );
-
-      if (response.statusCode == 200) {
-        final data = response.body;
-        final responseData = jsonDecode(data)['data'];
-        final url =
-            responseData['url']; // Assurez-vous que l'URL est dans la réponse
-        print('$url');
-
-        // Si la requête est réussie, convertissez les données JSON en liste d'objets MyModel
-      } else {
-        //EasyLoading.showError('Failed to submit. Please try again.');
-        // API call failed
-        EasyLoading.dismiss();
-        // Handle error, show a message, etc.
-        print('Errorpays: ${response.statusCode}, ${response.body}');
-        // Optionally, you can show an error message using EasyLoading.showError()
-      }
-      //EasyLoading.dismiss();
+    if (token == null) {
+      Get.snackbar("Error", "Token not found");
+      return;
     }
+    // Envoyer la requête POST
+    final response = await http.get(
+      Uri.parse('$apiUrl/supplier/transaction/$id/pay?amount=$amount'),
+      headers: {
+        'Authorization': 'Bearer $token', // Ajout du token dans les en-têtes
+        // 'Content-Type': 'application/json', // Spécifiez le type de contenu
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final data = response.body;
+      final responseData = jsonDecode(data)['data'];
+      // final url =
+      //     responseData['url']; // Assurez-vous que l'URL est dans la réponse
+      print('$responseData');
+      EasyLoading.showSuccess('Paiement effectué !');
+
+      // Si la requête est réussie, convertissez les données JSON en liste d'objets MyModel
+    } else {
+      //EasyLoading.showError('Failed to submit. Please try again.');
+      // API call failed
+      EasyLoading.dismiss();
+      // Handle error, show a message, etc.
+      print('Errorpays: ${response.statusCode}, ${response.body}');
+      // Optionally, you can show an error message using EasyLoading.showError()
+    }
+    //EasyLoading.dismiss();
+    // }
   }
 
   Future<void> fetchTransaction() async {

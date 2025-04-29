@@ -23,6 +23,12 @@ class CommandHome extends StatefulWidget {
 
 class _CommandHomeState extends State<CommandHome> {
   final OrderController cmdeControkler = Get.put(OrderController());
+
+  @override
+  void initState() {
+    print("==les items ${widget.items.product.colors}");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,13 +103,13 @@ class _CommandHomeState extends State<CommandHome> {
                               onPressed: () {
                                 Navigator.pop(context);
                                 _showValidationSheet(
-                                    context, "En cours de livraison");
+                                    context, "commande En attente");
                               },
                               style: AppConstants.validateButtonStyle.copyWith(
-                                backgroundColor:
-                                    const MaterialStatePropertyAll(Colors.blue),
+                                backgroundColor: const MaterialStatePropertyAll(
+                                    Color.fromARGB(255, 175, 12, 129)),
                               ),
-                              child: const Text('En cours de livraison',
+                              child: const Text('commande En attente',
                                   style: TextStyle(color: Colors.white)),
                             ),
                           ),
@@ -131,13 +137,13 @@ class _CommandHomeState extends State<CommandHome> {
                               onPressed: () {
                                 Navigator.pop(context);
                                 _showValidationSheet(
-                                    context, "commande En attente");
+                                    context, "En cours de livraison");
                               },
                               style: AppConstants.validateButtonStyle.copyWith(
-                                backgroundColor: const MaterialStatePropertyAll(
-                                    Color.fromARGB(255, 175, 12, 129)),
+                                backgroundColor:
+                                    const MaterialStatePropertyAll(Colors.blue),
                               ),
-                              child: const Text('commande En attente',
+                              child: const Text('En cours de livraison',
                                   style: TextStyle(color: Colors.white)),
                             ),
                           ),
@@ -228,8 +234,8 @@ class _CommandHomeState extends State<CommandHome> {
                                                 borderRadius:
                                                     BorderRadius.circular(10)),
                                             child: Text(
-                                              widget
-                                                  .items.product.colors![index],
+                                              widget.items.product
+                                                  .colors![index]["name"],
                                               style: AppConstants.bodyTextStyle,
                                             ),
                                           ));

@@ -27,34 +27,35 @@ class Order {
   final String updatedAt;
   final String? createdAtFr;
   final String? updatedAtFr;
+  final int? commissionApplied;
 
-  Order({
-    required this.id,
-    required this.person,
-    required this.reference,
-    this.detail,
-    required this.stars,
-    required this.status,
-    required this.returned,
-    required this.seller,
-    this.client,
-    required this.items,
-    this.delivery,
-    this.expedition,
-    this.afterExpedition,
-    this.canceled,
-    this.received,
-    this.validated,
-    this.postponed,
-    this.dontPickUp,
-    this.pending,
-    this.inProgress,
-    this.confirmed,
-    required this.createdAt,
-    required this.updatedAt,
-    this.createdAtFr,
-    this.updatedAtFr,
-  });
+  Order(
+      {required this.id,
+      required this.person,
+      required this.reference,
+      this.detail,
+      required this.stars,
+      required this.status,
+      required this.returned,
+      required this.seller,
+      this.client,
+      required this.items,
+      this.delivery,
+      this.expedition,
+      this.afterExpedition,
+      this.canceled,
+      this.received,
+      this.validated,
+      this.postponed,
+      this.dontPickUp,
+      this.pending,
+      this.inProgress,
+      this.confirmed,
+      required this.createdAt,
+      required this.updatedAt,
+      this.createdAtFr,
+      this.updatedAtFr,
+      this.commissionApplied});
 
   factory Order.fromJson(Map<String, dynamic> json) {
     print('Commande $json');
@@ -65,6 +66,7 @@ class Order {
       detail: json['detail'],
       stars: json['stars'],
       status: json['status'],
+      commissionApplied: json['commission_applied'],
       returned: json['returned'] == 1,
       seller: Seller.fromJson(json['seller']),
       client: json['client'] != null ? Client.fromJson(json['client']) : null,
@@ -109,17 +111,47 @@ class Order {
       updatedAtFr: json['updated_at_fr'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'person': person,
+      'reference': reference,
+      'detail': detail,
+      'stars': stars,
+      'status': status,
+      'returned': returned ? 1 : 0,
+      'seller': seller.toJson(),
+      'client': client?.toJson(),
+      'items': items.map((item) => item.toJson()).toList(),
+      'delivery': delivery?.toJson(),
+      'expedition': expedition?.toJson(),
+      'after_expedition': afterExpedition?.toJson(),
+      'canceled': canceled?.toJson(),
+      'received': received?.toJson(),
+      'validated': validated?.toJson(),
+      'postponed': postponed?.toJson(),
+      'dont_pick_up': dontPickUp?.toJson(),
+      'pending': pending?.toJson(),
+      'in_progress': inProgress?.toJson(),
+      'confirmed': confirmed?.toJson(),
+      'created_at': createdAt,
+      'updated_at': updatedAt,
+      'created_at_fr': createdAtFr,
+      'updated_at_fr': updatedAtFr,
+    };
+  }
 }
 
 //Users
 class Users {
   final int id;
-  final String email;
+  final String? email;
   final String phoneNumber;
 
   Users({
     required this.id,
-    required this.email,
+    this.email,
     required this.phoneNumber,
   });
 
@@ -127,9 +159,17 @@ class Users {
     print('Users $json');
     return Users(
       id: json['id'],
-      email: json['email'],
+      email: json['email'] ?? '',
       phoneNumber: json['phone_number'],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'email': email,
+      'phone_number': phoneNumber,
+    };
   }
 }
 
@@ -160,7 +200,7 @@ class City {
     return {
       'id': id,
       'name': name,
-      'country': country!.toJson(),
+      // 'country': country!.toJson(),
     };
   }
 }
@@ -245,6 +285,18 @@ class Seller {
       stars: json['stars'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'user': user.toJson(),
+      'first_name': firstName,
+      'last_name': lastName,
+      'job': job,
+      'city': city,
+      'stars': stars,
+    };
+  }
 }
 
 //Client
@@ -265,6 +317,13 @@ class Client {
       phoneNumber: json['phone_number'],
       phoneNumber2: json['phone_number_2'],
     );
+  }
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'phone_number': phoneNumber,
+      'phone_number2': phoneNumber2,
+    };
   }
 }
 
@@ -306,6 +365,20 @@ class OrderItem {
       product: Product.fromJson(json['product']),
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'reference': reference,
+      'star': star,
+      'price': price,
+      'quantity': quantity,
+      'fees': fees,
+      'total': total,
+      'total_fees': totalfees,
+      'total_product': totalproduct,
+      'product': product.toJson(),
+    };
+  }
 }
 
 //Livraison
@@ -327,6 +400,14 @@ class Delivery {
       time: json['time'],
       city: json['city'] != null ? City.fromJson(json['city']) : null,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'date': date,
+      'time': time,
+      'city': city?.toJson(),
+    };
   }
 }
 
@@ -350,6 +431,14 @@ class Expedition {
       data: json['data'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'actor': actor,
+      'user': user?.toJson(),
+      'data': data,
+    };
+  }
 }
 
 //Status de commande
@@ -371,5 +460,13 @@ class OrderStatusDetail {
       date: json['date'],
       time: json['time'],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'reason': reason,
+      'date': date,
+      'time': time,
+    };
   }
 }

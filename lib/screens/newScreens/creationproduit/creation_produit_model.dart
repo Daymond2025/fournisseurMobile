@@ -21,6 +21,7 @@ class CreationProduitModel extends FlutterFlowModel<CreationProduitWidget> {
   FocusNode? textFieldFocusNode1;
   TextEditingController? textController1;
   String? Function(BuildContext, String?)? textController1Validator;
+
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode2;
   FocusNode? textFieldFocusNodes;
@@ -52,6 +53,9 @@ class CreationProduitModel extends FlutterFlowModel<CreationProduitWidget> {
   TextEditingController? textController6;
   String? Function(BuildContext, String?)? textController6Validator;
   // State field(s) for TextField widget.
+  FocusNode? textFieldFocusNodeT;
+  TextEditingController? textControllerT;
+  String? Function(BuildContext, String?)? textControllerTValidator;
   FocusNode? textFieldFocusNode7;
   TextEditingController? textController7;
   String? Function(BuildContext, String?)? textController7Validator;

@@ -32,7 +32,8 @@ class _ComptatScreenState extends State<ComptatScreen> {
   String year = DateFormat('y').format(DateTime.now());
   String month = DateFormat('MMMM').format(DateTime.now());
   String selectedFilter = 'Non soldés';
-  String selectedFil = 'pending';
+  String selectedFil = 'validated';
+  int selectedComAp = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +65,7 @@ class _ComptatScreenState extends State<ComptatScreen> {
                   child: Text('Rétirer'),
                 ),
               ];
-            },   
+            },
           ),
         ],
         leading: IconButton(
@@ -110,8 +111,9 @@ class _ComptatScreenState extends State<ComptatScreen> {
                         return const Center(child: CircularProgressIndicator());
                       }
 
-                      var wallet = walletController.wallet.value;
-                      var dash = walletController.dash.value;
+                      var wallet = walletController?.wallet?.value;
+                      var dash = walletController?.dash?.value;
+                      print("dash est $dash");
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -127,11 +129,11 @@ class _ComptatScreenState extends State<ComptatScreen> {
                                       children: <TextSpan>[
                                         TextSpan(
                                           text:
-                                              '${formatwallet.format(dash?.chiffreAffaire) ?? 0}',
+                                              '${formatwallet.format(dash?.chiffreAffaire ?? 0) ?? 0}',
                                           style: AppConstants.headingTextStyle
                                               .copyWith(
                                                   color: Colors.white,
-                                                  fontSize: 35),
+                                                  fontSize: 25),
                                         ),
                                         const TextSpan(
                                           text: AppConstants.currency,
@@ -185,7 +187,7 @@ class _ComptatScreenState extends State<ComptatScreen> {
                                                 children: <TextSpan>[
                                                   TextSpan(
                                                     text:
-                                                        '${formatwallet.format(dash?.aSolder) ?? 0}',
+                                                        '${formatwallet?.format(dash?.aSolder) ?? 0}',
                                                     style: AppConstants
                                                         .headingTextStyle
                                                         .copyWith(
@@ -668,7 +670,8 @@ class _ComptatScreenState extends State<ComptatScreen> {
                                     titre: 'Commande livrée',
                                   )),
                                   child: comptableCard(
-                                    item.product.name ?? '',
+                                    "${item.product.name} ${orderst?.commissionApplied}" ??
+                                        '',
                                     '${item.product.stock}', // Quantité d'items
                                     '${item.product.views}',
                                     '${item.product.shop!.city!.name}',
@@ -676,7 +679,9 @@ class _ComptatScreenState extends State<ComptatScreen> {
                                         ? item.product.images!.first
                                         : 'https://www.lascom.com/wp-content/uploads/2021/03/Bland_Cosmetic_Product_Packaging_Unit_500x400.jpg',
                                     '${formatCustomDate(order.commande!.createdAtFr)} à ${order.commande!.delivery!.time.substring(0, 5)}',
-                                    '${order.amount}',
+                                    (item.price ?? 0) -
+                                        (item.product.price!.price ?? 0) +
+                                        (item.product.price?.partner ?? 0),
                                     // Exemples de temps fixe ou dynamique
                                     '${item.total}',
                                     '${item.product.code ?? 0}', // Prix total ou ajusté
@@ -792,16 +797,16 @@ class _ComptatScreenState extends State<ComptatScreen> {
                                                                     CrossAxisAlignment
                                                                         .start,
                                                                 children: [
-                                                                  const Text(
-                                                                    'Prix partenaire',
-                                                                    style: AppConstants
-                                                                        .bodyTextStyle,
-                                                                  ),
-                                                                  Text(
-                                                                    '${item.product.price!.partner}  ${AppConstants.currency} ',
-                                                                    style: AppConstants
-                                                                        .headingTextStyle,
-                                                                  ),
+                                                                  // const Text(
+                                                                  //   'Prix partenaire',
+                                                                  //   style: AppConstants
+                                                                  //       .bodyTextStyle,
+                                                                  // ),
+                                                                  // Text(
+                                                                  //   '${item.product.price!.partner}  ${AppConstants.currency} ',
+                                                                  //   style: AppConstants
+                                                                  //       .headingTextStyle,
+                                                                  // ),
                                                                   const SizedBox(
                                                                     height: 20,
                                                                   ),
@@ -850,7 +855,7 @@ class _ComptatScreenState extends State<ComptatScreen> {
                                                                         .bodyTextStyle,
                                                                   ),
                                                                   Text(
-                                                                    '${order.amount}  ${AppConstants.currency} ',
+                                                                    '${item.product.price!.partner}  ${AppConstants.currency} ',
                                                                     style: AppConstants
                                                                         .headingTextStyle
                                                                         .copyWith(
@@ -877,12 +882,17 @@ class _ComptatScreenState extends State<ComptatScreen> {
                                                                         .wallet
                                                                         .value!
                                                                         .totalAmount! >
-                                                                    (item.price
-                                                                        as num)) {
-                                                                  transController
-                                                                      .submitsolder(
-                                                                          order
-                                                                              .id);
+                                                                    (item
+                                                                        .product
+                                                                        .price
+                                                                        ?.partner as num)) {
+                                                                  transController.submitsolder(
+                                                                      order.id,
+                                                                      (item.price ?? 0) -
+                                                                          (item.product.price!.price ??
+                                                                              0) +
+                                                                          (item.product.price?.partner ??
+                                                                              0));
                                                                 } else {
                                                                   EasyLoading
                                                                       .showError(
@@ -946,7 +956,9 @@ class _ComptatScreenState extends State<ComptatScreen> {
       onPressed: () {
         setState(() {
           selectedFilter = status;
-          selectedFil = apiStatus; // Update the selected filter
+          selectedFil = apiStatus;
+          // selectedComAp = commissionApp;
+          // Update the selected filter
         });
       },
       child: Column(

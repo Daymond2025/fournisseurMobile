@@ -100,13 +100,13 @@ class _CommentcavaWidgetState extends State<CommentcavaWidget> {
                               ),
                             ),
                             Text(
-                              'COMMENT CA VA',
+                              'FAQ - Bienvenue chez Daymond',
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
                                     fontFamily: 'Inter',
                                     color: Color(0xFF707070),
-                                    fontSize: 18,
+                                    fontSize: 15,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -154,12 +154,13 @@ class _CommentcavaWidgetState extends State<CommentcavaWidget> {
                                       children: [
                                         Text(
                                           'DAYMOND , QU\'EST CE QUE C\'EST ?',
+                                          textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
                                                 fontFamily: 'Inter',
-                                                color: Color(0xFF707070),
-                                                fontSize: 13,
+                                                color: Colors.black,
+                                                fontSize: 15,
                                                 letterSpacing: 0.0,
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -289,12 +290,13 @@ class _CommentcavaWidgetState extends State<CommentcavaWidget> {
                                       children: [
                                         Text(
                                           'COMMENT FONCTIONNE DAYMOND POUR LES FOURNISSEURS  ?',
+                                          textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
                                                 fontFamily: 'Inter',
-                                                color: Color(0xFF707070),
-                                                fontSize: 13,
+                                                color: Colors.black,
+                                                fontSize: 15,
                                                 letterSpacing: 0.0,
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -444,12 +446,13 @@ class _CommentcavaWidgetState extends State<CommentcavaWidget> {
                                       children: [
                                         Text(
                                           'COMMENT SONT GERES LES PAIEMENTS EN FONCTION DU TYPE DE COMMANDE  ?',
+                                          textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
                                                 fontFamily: 'Inter',
-                                                color: Color(0xFF707070),
-                                                fontSize: 13,
+                                                color: Colors.black,
+                                                fontSize: 15,
                                                 letterSpacing: 0.0,
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -616,12 +619,13 @@ class _CommentcavaWidgetState extends State<CommentcavaWidget> {
                                       children: [
                                         Text(
                                           'COMMENT AJOUTER UN PRODUIT SUR DAYMOND ?',
+                                          textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
                                                 fontFamily: 'Inter',
-                                                color: Color(0xFF707070),
-                                                fontSize: 13,
+                                                color: Colors.black,
+                                                fontSize: 15,
                                                 letterSpacing: 0.0,
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -861,12 +865,13 @@ class _CommentcavaWidgetState extends State<CommentcavaWidget> {
                                       children: [
                                         Text(
                                           'COMMENT GERER MES COMMANDES ?',
+                                          textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
                                                 fontFamily: 'Inter',
-                                                color: Color(0xFF707070),
-                                                fontSize: 13,
+                                                color: Colors.black,
+                                                fontSize: 15,
                                                 letterSpacing: 0.0,
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -926,12 +931,13 @@ class _CommentcavaWidgetState extends State<CommentcavaWidget> {
                                       children: [
                                         Text(
                                           'COMMENT RETIRER DE L\'ARGENT SUR MON PORTEFEUILLE?',
+                                          textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
                                                 fontFamily: 'Inter',
-                                                color: Color(0xFF707070),
-                                                fontSize: 13,
+                                                color: Colors.black,
+                                                fontSize: 15,
                                                 letterSpacing: 0.0,
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -1056,12 +1062,13 @@ class _CommentcavaWidgetState extends State<CommentcavaWidget> {
                                       children: [
                                         Text(
                                           'COMMENT RECHARGER MON PORTEFEUILLE POUR PAYER LES COMMISSIONS DES REVENDEURS?',
+                                          textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
                                                 fontFamily: 'Inter',
-                                                color: Color(0xFF707070),
-                                                fontSize: 13,
+                                                color: Colors.black,
+                                                fontSize: 15,
                                                 letterSpacing: 0.0,
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -1200,12 +1207,13 @@ class _CommentcavaWidgetState extends State<CommentcavaWidget> {
                                       children: [
                                         Text(
                                           'COMMENT ACCEDER AUX LIVREURS ?',
+                                          textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
                                                 fontFamily: 'Inter',
-                                                color: Color(0xFF707070),
-                                                fontSize: 13,
+                                                color: Colors.black,
+                                                fontSize: 15,
                                                 letterSpacing: 0.0,
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -1282,12 +1290,13 @@ class _CommentcavaWidgetState extends State<CommentcavaWidget> {
                                       children: [
                                         Text(
                                           'QUELS SONT LES AVANTAGES D\'ETRE FOURNISSEUR SUR DAYMOND ?',
+                                          textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
                                                 fontFamily: 'Inter',
-                                                color: Color(0xFF707070),
-                                                fontSize: 13,
+                                                color: Colors.black,
+                                                fontSize: 15,
                                                 letterSpacing: 0.0,
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -1495,8 +1504,8 @@ class _CommentcavaWidgetState extends State<CommentcavaWidget> {
                                               .bodyMedium
                                               .override(
                                                 fontFamily: 'Inter',
-                                                color: Color(0xFF707070),
-                                                fontSize: 13,
+                                                color: Colors.black,
+                                                fontSize: 15,
                                                 letterSpacing: 0.0,
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -1508,7 +1517,7 @@ class _CommentcavaWidgetState extends State<CommentcavaWidget> {
                                             children: [
                                               TextSpan(
                                                 text:
-                                                    'Notre équipe est à votre disposition pour répondre à toutes vos questions et vous accompagner dans votre utilisation de Daymond. ',
+                                                    'Notre équipe est à votre disposition pour répondre à toutes vos questions et vous accompagner dans votre utilisation de Daymond. Contactez-nous via WhatsApp : +225 0707545252 .Avec Daymond, boostez votre activité et vendez vos produits partout en Côte d’Ivoire sans contraintes.Si vous avez une question qui n’est pas dans cette FAQ, écrivez-nous, nous serons ravis de vous répondre.',
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
@@ -1530,6 +1539,31 @@ class _CommentcavaWidgetState extends State<CommentcavaWidget> {
                                     ),
                                   ),
                                 ],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 30),
+                            child: InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                await launchURL(
+                                    'https://docs.google.com/document/d/e/2PACX-1vT0nQCjvCcRBfr782GDpGdv5xMmRndRHC4u5CZ_AurtZZ6jf_Kmg-OftaspzFJjAFBARTIFxwdABWHS/pub');
+                              },
+                              child: Text(
+                                'Conditions générales',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Inter',
+                                      color: Color(0xFFFF9500),
+                                      fontSize: 14,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                               ),
                             ),
                           ),
