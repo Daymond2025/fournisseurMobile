@@ -7,7 +7,7 @@ import 'package:daymond_dis/controllers/productController.dart';
 import 'package:daymond_dis/controllers/shopController.dart';
 import 'package:daymond_dis/controllers/walletController.dart';
 import 'package:daymond_dis/models/api_response.dart';
-import 'package:daymond_dis/models/statemedel.dart';
+import 'package:daymond_dis/models/statemodel.dart';
 import 'package:daymond_dis/models/usermodel.dart';
 import 'package:daymond_dis/screens/views/produits/produitscreen.dart';
 import 'package:daymond_dis/services/userService%20.dart';
@@ -2334,22 +2334,42 @@ class _CreationProduitWidgetState extends State<CreationProduitWidget> {
                                                           child: Padding(
                                                             padding:
                                                                 EdgeInsets.all(
-                                                                    14),
-                                                            child: Text(
-                                                              'le vendeur reçoit : ${_prixPartenaireController.text != '' ? (int.parse(_prixPartenaireController.text) * 60 / 100) : 0}  FCFA',
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium
-                                                                  .override(
-                                                                    fontSize:
-                                                                        9.0,
-                                                                    fontFamily:
-                                                                        'Inter',
-                                                                    color: Color(
-                                                                        0xFFFF5F84),
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                  ),
+                                                                    10),
+                                                            child: Column(
+                                                              children: [
+                                                                Text(
+                                                                  'le vendeur reçoit :',
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .override(
+                                                                        fontSize:
+                                                                            12.0,
+                                                                        fontFamily:
+                                                                            'Inter',
+                                                                        color: Color(
+                                                                            0xFFFF5F84),
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                      ),
+                                                                ),
+                                                                Text(
+                                                                  '${_prixPartenaireController.text != '' ? (int.parse(_prixPartenaireController.text) * 60 / 100) : 0}  FCFA',
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .override(
+                                                                        fontSize:
+                                                                            14.0,
+                                                                        fontFamily:
+                                                                            'Inter',
+                                                                        color: Color(
+                                                                            0xFFFF5F84),
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                      ),
+                                                                ),
+                                                              ],
                                                             ),
                                                           ),
                                                         ),
@@ -2357,64 +2377,64 @@ class _CreationProduitWidgetState extends State<CreationProduitWidget> {
                                                     ].divide(
                                                         SizedBox(width: 10)),
                                                   ),
-                                                  if (errorMessage == true)
-                                                    Container(
-                                                      decoration: BoxDecoration(
-                                                        color:
-                                                            Color(0xFFFFECEC),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                      ),
-                                                      padding:
-                                                          EdgeInsets.all(5),
-                                                      child: Text(
-                                                        'Nous vous recommandons une commission de ${commissionMin.toStringAsFixed(2)} FCFA pour ce produit',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Inter',
-                                                                  color: Color(
-                                                                      0xFFFF5F84),
-                                                                  fontSize: 10,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                ),
-                                                      ),
-                                                    ),
+                                                  // if (errorMessage == true)
+                                                  //   Container(
+                                                  //     decoration: BoxDecoration(
+                                                  //       color:
+                                                  //           Color(0xFFFFECEC),
+                                                  //       borderRadius:
+                                                  //           BorderRadius
+                                                  //               .circular(10),
+                                                  //     ),
+                                                  //     padding:
+                                                  //         EdgeInsets.all(5),
+                                                  //     child: Text(
+                                                  //       'Nous vous recommandons une commission de ${commissionMin.toStringAsFixed(2)} FCFA pour ce produit',
+                                                  //       style:
+                                                  //           FlutterFlowTheme.of(
+                                                  //                   context)
+                                                  //               .bodyMedium
+                                                  //               .override(
+                                                  //                 fontFamily:
+                                                  //                     'Inter',
+                                                  //                 color: Color(
+                                                  //                     0xFFFF5F84),
+                                                  //                 fontSize: 10,
+                                                  //                 letterSpacing:
+                                                  //                     0.0,
+                                                  //               ),
+                                                  //     ),
+                                                  //   ),
 
-                                                  if (_prixOfficielController
-                                                      .text.isNotEmpty)
-                                                    Container(
-                                                      decoration: BoxDecoration(
-                                                        color:
-                                                            Color(0xFFFFECEC),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                      ),
-                                                      padding:
-                                                          EdgeInsets.all(5),
-                                                      child: Text(
-                                                        'Commission minimum ${commissionMin.toStringAsFixed(2)} FCFA',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Inter',
-                                                                  color: Color(
-                                                                      0xFFFF5F84),
-                                                                  fontSize: 10,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                ),
-                                                      ),
-                                                    ),
+                                                  // if (_prixOfficielController
+                                                  //     .text.isNotEmpty)
+                                                  //   Container(
+                                                  //     decoration: BoxDecoration(
+                                                  //       color:
+                                                  //           Color(0xFFFFECEC),
+                                                  //       borderRadius:
+                                                  //           BorderRadius
+                                                  //               .circular(10),
+                                                  //     ),
+                                                  //     padding:
+                                                  //         EdgeInsets.all(5),
+                                                  //     child: Text(
+                                                  //       'Commission minimum ${commissionMin.toStringAsFixed(2)} FCFA',
+                                                  //       style:
+                                                  //           FlutterFlowTheme.of(
+                                                  //                   context)
+                                                  //               .bodyMedium
+                                                  //               .override(
+                                                  //                 fontFamily:
+                                                  //                     'Inter',
+                                                  //                 color: Color(
+                                                  //                     0xFFFF5F84),
+                                                  //                 fontSize: 10,
+                                                  //                 letterSpacing:
+                                                  //                     0.0,
+                                                  //               ),
+                                                  //     ),
+                                                  //   ),
                                                 ].divide(SizedBox(height: 20)),
                                               ),
                                             ),
@@ -2534,39 +2554,50 @@ class _CreationProduitWidgetState extends State<CreationProduitWidget> {
                                                         _imagePaths, // Chemins des images sélectionnées
                                                   );
 
-                                                  // Appel de la méthode submitProjet du ProductController
-                                                  ProducttController
-                                                      projetController =
-                                                      ProducttController();
-                                                  bool success =
-                                                      await projetController
-                                                          .submitProjet(Produit,
-                                                              idshop: idsop);
-
-                                                  // Affichage d'un message en fonction de la réussite ou de l'échec de la soumission
-                                                  if (success) {
-                                                    EasyLoading.showSuccess(
-                                                        'Produit soumis avec succès!');
-                                                    ScaffoldMessenger.of(
-                                                            context)
-                                                        .showSnackBar(
-                                                      const SnackBar(
-                                                        content: Text(
-                                                            'Produit soumis avec succès!'),
-                                                      ),
-                                                    );
+                                                  if (errorMessage == true) {
+                                                    Get.snackbar(
+                                                        "Attention",
+                                                        colorText: Colors.white,
+                                                        backgroundColor:
+                                                            Colors.red,
+                                                        "Nous vous recommandons une commission de ${commissionMin.toStringAsFixed(2)} FCFA pour ce produit");
                                                   } else {
-                                                    EasyLoading.showError(
-                                                        'Erreur lors de la soumission du produit');
-                                                    ScaffoldMessenger.of(
-                                                            context)
-                                                        .showSnackBar(
-                                                      const SnackBar(
-                                                        content: Text(
-                                                            'Erreur lors de la soumission du produit'),
-                                                      ),
-                                                    );
+                                                    // Appel de la méthode submitProjet du ProductController
+                                                    ProducttController
+                                                        projetController =
+                                                        ProducttController();
+                                                    bool success =
+                                                        await projetController
+                                                            .submitProjet(
+                                                                Produit,
+                                                                idshop: idsop);
+
+                                                    // Affichage d'un message en fonction de la réussite ou de l'échec de la soumission
+                                                    if (success) {
+                                                      EasyLoading.showSuccess(
+                                                          'Produit soumis avec succès!');
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                        const SnackBar(
+                                                          content: Text(
+                                                              'Produit soumis avec succès!'),
+                                                        ),
+                                                      );
+                                                    } else {
+                                                      EasyLoading.showError(
+                                                          'Erreur lors de la soumission du produit');
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                        const SnackBar(
+                                                          content: Text(
+                                                              'Erreur lors de la soumission du produit'),
+                                                        ),
+                                                      );
+                                                    }
                                                   }
+
                                                   break;
                                                 default:
                                               }

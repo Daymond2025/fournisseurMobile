@@ -12,7 +12,7 @@ import 'package:http/http.dart' as http;
 
 import '../constants/constantApp.dart';
 import '../models/walletmodel.dart';
-import '../models/produitsmadels.dart';
+import '../models/produitsmodels.dart';
 import '../models/promadel.dart';
 import '../models/usermodel.dart'; // Import your Product model
 

@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../constants/constantApp.dart';
-import '../models/statemedel.dart';
+import '../models/statemodel.dart';
 
 class ConditionController extends GetxController {
   Rx<List<StateParams>> conditionList = Rx<List<StateParams>>([]);

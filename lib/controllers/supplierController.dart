@@ -239,7 +239,9 @@ class Suppliercontroller extends GetxController {
         return true;
       } else {
         EasyLoading.dismiss();
+        var responseData = jsonDecode(response.body);
         print('Erreur API: ${response.body}');
+        Get.snackbar("Erreur", "${responseData['message']}");
         return false;
       }
     } catch (e) {

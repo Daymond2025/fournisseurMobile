@@ -13,7 +13,7 @@ import '../../../constants/constantApp.dart';
 import '../../../controllers/parametreController.dart';
 import '../../../controllers/productController.dart';
 import '../../../models/promadel.dart';
-import '../../../models/statemedel.dart';
+import '../../../models/statemodel.dart';
 import '../../../models/usermodel.dart';
 import 'package:image_picker/image_picker.dart';
 

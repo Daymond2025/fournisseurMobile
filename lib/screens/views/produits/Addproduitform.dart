@@ -17,7 +17,7 @@ import '../../../controllers/parametreController.dart';
 import '../../../controllers/productController.dart';
 import '../../../controllers/shopController.dart';
 import '../../../models/api_response.dart';
-import '../../../models/statemedel.dart';
+import '../../../models/statemodel.dart';
 import '../../../models/usermodel.dart';
 import 'package:image_picker/image_picker.dart';
 

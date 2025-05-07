@@ -372,9 +372,9 @@ class OrderItem {
       'star': star,
       'price': price,
       'quantity': quantity,
-      'fees': fees,
+      'fees': fees, // Frais de livraison
       'total': total,
-      'total_fees': totalfees,
+      'total_fees': totalfees, // Total des frais de livraison
       'total_product': totalproduct,
       'product': product.toJson(),
     };

@@ -21,7 +21,7 @@ class ShopController extends GetxController {
         return;
       }
       final response = await http.get(
-        Uri.parse(AppConstants.shop), // Remplace par ton endpoint
+        Uri.parse(AppConstants.shop), // Remplace par ton endpoint API
         headers: {
           'Authorization': 'Bearer $token',
           'Content-Type': 'application/json',

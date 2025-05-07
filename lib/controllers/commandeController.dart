@@ -70,7 +70,7 @@ class OrderController extends GetxController {
       } else if (response.statusCode == 401) {
         Get.offAll(ConnexionWidget());
         Get.snackbar(
-            "Erreur", "Accès non autorisé, veuillez vous reconnecter.");
+            "Erreur", "Accès non autorisé, veuillez vous reconnecter !.");
       } else {
         Get.snackbar("Erreur",
             "Echec du chargement des commandes: ${response.statusCode}");
@@ -129,7 +129,7 @@ class OrderController extends GetxController {
             backgroundColor: Colors.red, colorText: Colors.white);
       }
     } catch (e) {
-      // Gérer les erreurs de connexion ou autres exceptions
+      // Gérer les erreurs de connexion ou autres exceptions 
       Get.snackbar('Erreur', 'Une erreur est survenue : $e',
           backgroundColor: Colors.red, colorText: Colors.white);
     }

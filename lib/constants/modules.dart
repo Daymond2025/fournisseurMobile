@@ -61,7 +61,7 @@ GestureDetector produitCard(
                   style:
                       AppConstants.bodyTextStyle.copyWith(color: Colors.blue),
                 )),
-            Row(
+            Row( // Changement de couleur pour les status
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(

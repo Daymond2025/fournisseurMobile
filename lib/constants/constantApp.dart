@@ -18,8 +18,7 @@ class AppConstants {
   static const String updateproduit = '$baseUrl/supplier/product';
   static const String updatestockproduit = '$baseUrl/supplier/product';
   static const String parametre = '$baseUrl/params/data?option=state';
-  static const String categories =
-      '$baseUrl/params/data?option=category_detail';
+  static const String categories = '$baseUrl/params/data?option=category_detail';
   static const String villes = '$baseUrl/params/data/offline?option=city';
   static const String walletbyuser = '$baseUrl/supplier/wallet';
   static const String dashboard = '$baseUrl/supplier/dashboard?option=apk';
@@ -212,7 +211,7 @@ DateTime? parseDate(String dateString) {
   } catch (e) {
     print('Erreur de format de date: $e');
   }
-  return null; // Si la date est invalide
+  return null; // Si la date est invalide 
 }
 
 Column formatDates(String? createdAt) {
